@@ -14,9 +14,11 @@ private:
 protected:
     string publishment_area;
 public:
+    Daily();
+    Daily(ifstream&);
     string getPrintingHour();
     string getPublishmentArea();
-    string getDetails();
+    void putDetails(ofstream&);
     void printDetails();
     void setPringingHour(string);
     void setPublishmentArea(string);

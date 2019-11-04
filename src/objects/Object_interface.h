@@ -12,11 +12,12 @@ class Object_interface {
 protected:
     string name;
 public:
-    virtual string getDetails() = 0;
+    virtual void putDetails(ofstream&) = 0;
     virtual void printDetails() = 0;
     virtual void update() = 0;
     string getName();
     void setName(string);
+    void setName(string, int);
 };
 
 

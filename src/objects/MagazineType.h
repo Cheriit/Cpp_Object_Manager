@@ -10,13 +10,13 @@
 
 template <class T> class MagazineType: virtual public Magazine {
 private:
-    T publish_day;
-protected:
     string bar_code;
+protected:
+    T publish_day;
 public:
-    T getPublishDaty();
+    T getPublishDay();
     string getBarCode();
-    string getDetails();
+    void putDetails(ofstream&);
     void printDetails();
     void setPublishDay(T);
     void setBarCode(string);

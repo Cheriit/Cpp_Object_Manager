@@ -8,7 +8,7 @@
 
 #include "Book.h"
 
-class Magazine: public Book{
+class Magazine: public Publisher{
 private:
     string topic;
     int pages;
@@ -18,13 +18,15 @@ protected:
     string magazine_number;
     string title;
 public:
+    Magazine();
+    Magazine(ifstream&);
     string getManagzineNumber();
     string getTopic();
     int getPages();
     string getTitle();
-    float getPtice();
-    string getCirculation();
-    string getDetails();
+    float getPrice();
+    int getCirculation();
+    void putDetails(ofstream&);
     void printDetails();
     void setMagazineNumber(string);
     void setTopic(string);

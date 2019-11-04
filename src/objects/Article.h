@@ -15,23 +15,27 @@ private:
     string author_first_name;
     string author_last_name;
     vector<string> pictures;
-    string cintent;
+    string content;
 protected:
-    string topic;
+    string subject;
 public:
+    Article();
+    Article(ifstream&);
+
     string getAuthorFirstName();
     string getAuthorLastName();
     string getAuthorName();
-    string getTopic();
+    string getSubject();
+    string getContent();
     vector<string> getPictures();
-    string getDetails();
+    void putDetails(ofstream&);
     void printDetails();
     void printShortDescription();
-    void setAuthorFullName(string);
-    void setTopic(string);
+    void printPictures();
+    void setAuthorFullName(string, string);
+    void setSubject(string);
     void setContent(string);
-    void addPhoto(string);
-    bool removePhoto(string);
+    void addPicture(string);
     void update();
     friend std::ostream& operator<<(std::ostream& output, const Article& article);
 

@@ -17,11 +17,13 @@ private:
 protected:
     string publisher_name;
 public:
+    Publisher();
+    Publisher(ifstream&);
     int getFoundingYear();
     string getPublisherName();
     string getOriginCountry();
     string getCEO();
-    string getDetails();
+    void putDetails(ofstream&);
     void printDetails();
     void setFoundingYear(int);
     void setPublisherName(string);

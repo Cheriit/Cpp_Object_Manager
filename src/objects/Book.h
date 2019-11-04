@@ -5,23 +5,26 @@
 #ifndef PROJECT01_BOOK_H
 #define PROJECT01_BOOK_H
 
+#include <ostream>
 #include "Publisher.h"
 #include "../../helpers/CoverType.h"
 using namespace std;
 
 class Book: public Publisher {
 private:
-    string isbn[13];
-    string publishing_date[10];
+    string isbn;
+    string publishing_date;
     int pages;
-    string format(9);
-    string genre();
+    string format;
+    string genre;
     CoverType cover;
-    float price();
+    float price;
 protected:
     string title;
     string author;
 public:
+    Book();
+    Book(ifstream&);
     string getTitle();
     string getISBN();
     string getAuthor();
@@ -31,7 +34,7 @@ public:
     string getGenre();
     CoverType getCover();
     float getPrice();
-    string getDetails();
+    void putDetails(ofstream&);
     void printDetails();
     void setTitle(string);
     void setISBN(string);

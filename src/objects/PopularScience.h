@@ -17,14 +17,13 @@ protected:
 public:
     string getFieldOfStudy();
     vector<string> getSources();
-    string getDetails();
+    void putDetails(ofstream&);
     void printDetails();
     void printShortDescription();
     void printSources();
     void setFieldOfStudy(string);
     void setSources(vector<string>);
     void addSource(string);
-    bool removeSource(string);
     void update();
     friend std::ostream& operator<<(std::ostream& output, const PopularScience& popularScience);
 };

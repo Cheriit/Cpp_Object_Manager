@@ -7,6 +7,8 @@
 
 #include <vector>
 #include <string>
+#include "../objects/Object_interface.h"
+#include <map>
 
 using namespace std;
 class Vertex {
@@ -21,6 +23,7 @@ public:
     void addChildren(Vertex);
     Vertex* findVertex(string);
     void printStructure(int);
+    map<string, Object_interface> getElements();
 };
 
 

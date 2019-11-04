@@ -17,11 +17,13 @@ private:
 protected:
     int sold_copies;
 public:
+    Bestseller();
+    Bestseller(ifstream&);
     int getSoldCopies();
     float getScore();
     string getBestsellingPeriod();
     string getBestsellingWhere();
-    string getDetails();
+    void putDetails(ofstream&);
     void printDetails();
     void printShortDescription();
     void setSoldCopies(int);
@@ -29,7 +31,7 @@ public:
     void setBestsellingPeriod(string, string);
     void setBestsellingWhere(string);
     void update();
-    friend std::ostream& operator<<(std::ostream& output, const Bestseller& bestseller);
+    friend std::ostream& operator<<(std::ostream&, const Bestseller& bestseller);
 };
 
 

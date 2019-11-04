@@ -9,7 +9,9 @@
 #include "../../helpers/WeekDay.h"
 #include "MagazineType.h"
 class Weekly: public MagazineType<WeekDay> {
-
+public:
+    Weekly();
+    Weekly(ifstream&);
 };
 
 
