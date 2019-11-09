@@ -4,10 +4,49 @@
 
 #include <iostream>
 #include <fstream>
+#include <limits>
 #include "Article.h"
 
-Article::Article(): Weekly(), Daily() {}
-Article::Article(ifstream& InputFile): Weekly(InputFile), Daily(InputFile) {}
+Article::Article(): Weekly(), Daily() {
+    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+    string tmp;
+    int pictures;
+    cout << "\t\tARTICLE" << endl;
+
+    cout << "Subject:" << endl;
+    getline(cin, this->subject);
+    cout << "Author's first name:" << endl;
+    getline(cin, this->author_first_name);
+    cout << "Author's last name:" << endl;
+    getline(cin, this->author_last_name);
+    cout << "Content:" << endl;
+    getline(cin, this->content);
+
+    cout << "Number of pictures:" << endl;
+    cin >> pictures;
+    cout << "Your pictures: " << endl;
+    for (int i = 0; i < pictures; i++) {
+        getline(cin, tmp);
+        this->addPicture(tmp);
+    }
+
+}
+Article::Article(ifstream& InputFile): Weekly(InputFile), Daily(InputFile) {
+    int tmp;
+    string tmp_picture;
+    getline(InputFile, this->author_first_name);
+    getline(InputFile, this->author_last_name);
+    cin >> tmp;
+    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+    for (int i = 0; i < tmp; i++) {
+        getline(InputFile, tmp_picture);
+        this->pictures.push_back(tmp_picture);
+    }
+    getline(InputFile, this->content);
+    getline(InputFile, this->subject);
+
+
+}
 
 string Article::getAuthorFirstName() { return this->author_first_name; }
 string Article::getAuthorLastName() { return this->author_last_name; }
@@ -30,29 +69,26 @@ void Article::printPictures() {
     }
 }
 void Article::putDetails(ofstream& OutputFile){
-    OutputFile << "ARTICLE" << endl;
-    OutputFile << this->name << endl;
+    Weekly::putDetails(OutputFile);
+    Daily::putDetails(OutputFile);
     OutputFile << this->author_first_name << endl;
-    OutputFile << this->author_first_name << endl;
+    OutputFile << this->author_last_name << endl;
     OutputFile << this->pictures.size() << endl;
     for (int i = 0; i < this->pictures.size(); ++i) {
         OutputFile << this->pictures[i] << endl;
     }
     OutputFile << this->content << endl;
     OutputFile << this->subject << endl;
-    Weekly::putDetails(OutputFile);
-    Daily::putDetails(OutputFile);
 }
 void Article::printDetails() {
-    cout << this->name << endl;
+    Weekly::printDetails();
+    Daily::printDetails();
     cout << "ARTICLE: " << endl;
     cout << "\tAuthor: " << this->getAuthorName() << endl;
     cout << "\tSubject: " << this->subject << endl;
     cout << "\tContent: " << this->content << endl;
     cout << "\tPictures: " << endl;
     this->printPictures();
-    Weekly::printDetails();
-    Daily::printDetails();
 }
 
 void Article::printShortDescription() {
@@ -63,11 +99,16 @@ void Article::printShortDescription() {
 
 std::ostream& operator<<(std::ostream &output, const Article& article) {
     output << article.name << endl;
-    output << "\t\"" << article.subject <<"\" by " << article.author_first_name << " " << article.author_last_name << " published by " << article.publisher_name << endl;
-    output << "\t Published at: " << article.publishment_area << " in " << article.title << " " << article.magazine_number << endl;
     return output;
 }
 void Article::update() {
     Weekly::update();
     Daily::update();
+    Object_interface::updateStr("Subject", this->subject);
+    Object_interface::updateStr("Author's first name", this->author_first_name);
+    Object_interface::updateStr("Author's last name", this->author_last_name);
+    Object_interface::updateStr("Content", this->content);
+    for (int i = 1; i <= this->pictures.size(); i++) {
+        Object_interface::updateStr("Picture nr. " + i, this->pictures[i-1]);
+    }
 }

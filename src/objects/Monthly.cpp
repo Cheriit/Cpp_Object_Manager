@@ -4,23 +4,40 @@
 
 #include <iostream>
 #include <fstream>
+#include <limits>
 #include "Monthly.h"
 
-Monthly::Monthly(): Magazine() {}
-Monthly::Monthly(ifstream& InputFile): Magazine(InputFile) {}
+Monthly::Monthly(): Magazine() {
+    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+    string tmp;
+    int tmp2;
+
+    cout << "\t\tMONTHLY" << endl;
+    cout << "Barcode:" << endl;
+    getline(cin, tmp);
+    this->setBarCode(tmp);
+    cout << "Publish day:" << endl;
+    cin >> tmp2;
+    this->setPublishDay(tmp2);
+}
+Monthly::Monthly(ifstream& InputFile): Magazine(InputFile) {
+    string tmp;
+    getline(InputFile, tmp);
+    this->setBarCode(tmp);
+    this->publish_day = Object_interface::readNum(InputFile);
+}
 
 void Monthly::putDetails(ofstream& OutputFile) {
-    OutputFile << "MONTHLY" << endl;
+    Magazine::putDetails(OutputFile);
     OutputFile << this->getPublishDay() << endl;
     OutputFile << this->getBarCode() << endl;
-    Magazine::putDetails(OutputFile);
 }
 
 void Monthly::printDetails() {
+    Magazine::printDetails();
     cout << "Monthly: " << endl;
     cout << "\tPublish day: " << this->getPublishDay() << endl;
     cout << "\tBarcode: " << this->getBarCode() << endl;
-    Magazine::printDetails();
 }
 
 void Monthly::printShortDescription() {
@@ -31,12 +48,16 @@ void Monthly::printShortDescription() {
 
 std::ostream &operator<<(std::ostream &output, const Monthly& monthly) {
     output << monthly.name << endl;
-    output << "\t\"" << monthly.title <<"\" Number " << monthly.magazine_number << " published by " << monthly.publisher_name << endl;
-    output << "\t Published at " << monthly.publish_day  << endl;
     return  output;
 }
 
 void Monthly::update() {
     Magazine::update();
+    std::string tmp;
+    std::cout << "Barcode:(" << this->getBarCode() << ")" << std::endl;
+    getline(std::cin, tmp);
+    if(!tmp.empty()) this->setBarCode(tmp);
+    Object_interface::updateNum<int>("Publish day", this->publish_day);
+
 }
 

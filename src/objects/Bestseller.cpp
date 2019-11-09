@@ -4,10 +4,37 @@
 
 #include <iostream>
 #include <fstream>
+#include <limits>
 #include "Bestseller.h"
 
-Bestseller::Bestseller(): Book() {}
-Bestseller::Bestseller(ifstream& InputFile): Book(InputFile) {}
+
+Bestseller::Bestseller(): Book() {
+    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+    string tmp;
+    cout << "\t\tBESTSELLER" << endl;
+
+    cout << "Bestselling from:" << endl;
+    getline(cin, this->bestselling_from);
+
+    cout << "Bestselling to:" << endl;
+    getline(cin, this->bestselling_to);
+
+    cout << "Bestselling where:" << endl;
+    getline(cin, this->bestselling_where);
+
+    cout << "Score:" << endl;
+    cin >> this->score;
+
+    cout << "Sold copies:" << endl;
+    cin >> this->sold_copies;
+}
+Bestseller::Bestseller(ifstream& InputFile): Book(InputFile) {
+    this->score = Object_interface::readNum(InputFile);
+    getline(InputFile, this->bestselling_from);
+    getline(InputFile, this->bestselling_to);
+    getline(InputFile, this->bestselling_where);
+    this->sold_copies = Object_interface::readNum(InputFile);
+}
 
 float Bestseller::getScore() { return this->score; }
 string Bestseller::getBestsellingPeriod() { return this->bestselling_from + "-" + this->bestselling_to; }
@@ -23,23 +50,21 @@ void Bestseller::setBestsellingWhere(string where) { this->bestselling_where = w
 void Bestseller::setSoldCopies(int sold_copies) { this->sold_copies = sold_copies; }
 
 void Bestseller::putDetails(ofstream& OutputFile){
-    OutputFile << "BESTSELLER" << endl;
-    OutputFile << this->name << endl;
+    Book::putDetails(OutputFile);
     OutputFile << this->score << endl;
     OutputFile << this->bestselling_from << endl;
     OutputFile << this->bestselling_to << endl;
     OutputFile << this->bestselling_where << endl;
     OutputFile << this->sold_copies << endl;
-    Book::putDetails(OutputFile);
 }
 void Bestseller::printDetails() {
+    Book::printDetails();
     cout << this->name << endl;
     cout << "BESTSELLER: " << endl;
     cout << "\tScore: " << this->score << endl;
-    cout << "\tBestselling period: " << this->bestselling_from << "+" << this->bestselling_to << endl;
+    cout << "\tBestselling period: " << this->bestselling_from << " - " << this->bestselling_to << endl;
     cout << "\tBestselling at: " << this->bestselling_where << endl;
     cout << "\tSold copies: " << this->sold_copies << endl;
-    Book::printDetails();
 }
 
 void Bestseller::printShortDescription() {
@@ -49,11 +74,15 @@ void Bestseller::printShortDescription() {
 }
 
 std::ostream& operator<<(std::ostream& output, const Bestseller& bestseller) {
-    output << bestseller.name << endl;
-    output << "\t\"" << bestseller.title <<"\" by " << bestseller.author << " published by " << bestseller.publisher_name << endl;
-    output << "\t sold in " << bestseller.sold_copies << " copies." << endl;
+    output << bestseller.name;
     return  output;
 }
 void Bestseller::update() {
     Book::update();
+    cout << "\t\tBESTSELLER" << endl;
+    Object_interface::updateNum<float>("Score", this->score);
+    Object_interface::updateStr("Bestselling from", this->bestselling_from);
+    Object_interface::updateStr("Bestselling to", this->bestselling_to);
+    Object_interface::updateStr("Bestselling where", this->bestselling_where);
+    Object_interface::updateNum<int>("Sold copies", this->sold_copies);
 }

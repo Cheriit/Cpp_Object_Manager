@@ -3,6 +3,7 @@
 //
 
 #include <algorithm>
+#include <iostream>
 #include "Object_interface.h"
 
 Object_interface::Object_interface() {}
@@ -33,5 +34,19 @@ Object_interface::~Object_interface() {
     Object_interface::removeName(this->name);
 }
 std::vector<std::string> Object_interface::usedNames;
+
+float Object_interface::readNum(std::ifstream& InputFile){
+    std::string tmp;
+    getline(InputFile, tmp);
+    if (tmp.empty()) return 0;
+    return stof(tmp);
+
+}
+void Object_interface::updateStr(std::string text, std::string& target) {
+    std::string tmp;
+    std::cout << text << ":(" << target << ")" << std::endl;
+    getline(std::cin, tmp);
+    if(!tmp.empty()) target = tmp;
+}
 
 

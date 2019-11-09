@@ -4,10 +4,36 @@
 
 #include <iostream>
 #include <fstream>
+#include <limits>
 #include "Magazine.h"
 
-Magazine::Magazine(): Publisher() {}
-Magazine::Magazine(ifstream& InputFile): Publisher(InputFile) {}
+Magazine::Magazine(): Publisher() {
+    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+    string tmp;
+
+    cout << "\t\tMAGAZINE" << endl;
+    cout << "Title:" << endl;
+    getline(cin, this->title);
+    cout << "Magazine number:" << endl;
+    getline(cin, this->magazine_number);
+    cout << "Topic:" << endl;
+    getline(cin, this->topic);
+    cout << "Pages:" << endl;
+    cin >> this->pages;
+    cout << "Price:" << endl;
+    cin >> this->price;
+    cout << "Circulation:" << endl;
+    cin >> this->circulation;
+}
+Magazine::Magazine(ifstream& InputFile): Publisher(InputFile) {
+    getline(InputFile, this->topic);
+    this->pages = Object_interface::readNum(InputFile);
+    this->price = Object_interface::readNum(InputFile);
+    this->circulation = Object_interface::readNum(InputFile);
+    getline(InputFile, this->magazine_number);
+    getline(InputFile, this->title);
+
+}
 
 string Magazine::getTopic() { return this->topic; }
 int Magazine::getPages() { return this->pages; }
@@ -24,17 +50,17 @@ void Magazine::setMagazineNumber(string magazine_number) { this->magazine_number
 void Magazine::setTitle(string title) { this->title = title; }
 
 void Magazine::putDetails(ofstream& OutputFile) {
-    OutputFile << "MAGAZINE" << endl;
+    Publisher::putDetails(OutputFile);
     OutputFile << this->topic << endl;
     OutputFile << this->pages << endl;
     OutputFile << this->price << endl;
     OutputFile << this->circulation << endl;
     OutputFile << this->magazine_number << endl;
     OutputFile << this->title << endl;
-    Publisher::putDetails(OutputFile);
 }
 
 void Magazine::printDetails() {
+    Publisher::printDetails();
     cout << "MAGAZINE: " << endl;
     cout << "\tTitle: " << this->title << endl;
     cout << "\tNumber: " << this->magazine_number << endl;
@@ -42,9 +68,15 @@ void Magazine::printDetails() {
     cout << "\tPages: " << this->pages << endl;
     cout << "\tPrice: " << this->price << endl;
     cout << "\tCirculation: " << this->circulation << endl;
-    Publisher::printDetails();
 }
 
 void Magazine::update() {
     Publisher::update();
+    Object_interface::updateStr("Title", this->title);
+    Object_interface::updateStr("Magazine number", this->magazine_number);
+    Object_interface::updateStr("Topic", this->topic);
+    Object_interface::updateNum<int>("Pages", this->pages);
+    Object_interface::updateNum<float>("Price", this->price);
+    Object_interface::updateNum<int>("Circulation", this->circulation);
+
 }

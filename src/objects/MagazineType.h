@@ -33,7 +33,7 @@ T MagazineType<T>::getPublishDay() { return this->publish_day; }
 template <class T>
 string MagazineType<T>::getBarCode() { return  this->bar_code; }
 template <class T>
-void MagazineType<T>::setPublishDay(T day) { this->day = day; }
+void MagazineType<T>::setPublishDay(T day) { this->publish_day = day; }
 template <class T>
 void MagazineType<T>::setBarCode(string bar_code) { this->bar_code = bar_code; }
 

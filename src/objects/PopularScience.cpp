@@ -4,10 +4,38 @@
 
 #include <iostream>
 #include <fstream>
+#include <limits>
 #include "PopularScience.h"
 
-PopularScience::PopularScience(): Book() {}
-PopularScience::PopularScience(ifstream& InputFile): Book(InputFile) {}
+PopularScience::PopularScience(): Book() {
+    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+    string tmp;
+    int sources;
+    cout << "\t\tPOPULARSCIENCE" << endl;
+
+    cout << "Field of study:" << endl;
+    getline(cin, this->title);
+
+    cout << "Number of sources:" << endl;
+    cin >> sources;
+    cout << "Your sources: " << endl;
+    for (int i = 0; i < sources; i++) {
+        getline(cin, tmp);
+        this->addSource(tmp);
+    }
+
+}
+PopularScience::PopularScience(ifstream& InputFile): Book(InputFile) {
+    int tmp;
+    string tmp_source;
+    getline(InputFile, this->field_of_study);
+    cin >> tmp;
+    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+    for (int i = 0; i < tmp; i++) {
+        getline(InputFile, tmp_source);
+        this->sources.push_back(tmp_source);
+    }
+}
 
 vector<string> PopularScience::getSources() { return this->sources; }
 string PopularScience::getFieldOfStudy() { return this->field_of_study; }
@@ -22,23 +50,20 @@ void PopularScience::printSources() {
 void PopularScience::addSource(string source) { this->sources.push_back(source); }
 
 void PopularScience::putDetails(ofstream& OutputFile){
-    OutputFile << "POPULARSCIENCE" << endl;
-    OutputFile << this->name << endl;
+    Book::putDetails(OutputFile);
     OutputFile << this->field_of_study << endl;
     OutputFile << this->sources.size() << endl;
     for (int i = 0; i < this->sources.size(); ++i) {
         OutputFile << this->sources[i] << endl;
     }
-
-    Book::putDetails(OutputFile);
 }
 void PopularScience::printDetails() {
+    Book::printDetails();
     cout << this->name << endl;
     cout << "POPULARSCIENCE: " << endl;
     cout << "\tField of study: " << this->field_of_study << endl;
     cout << "\tSources:" << endl;
     this->printSources();
-    Book::printDetails();
 }
 
 void PopularScience::printShortDescription() {
@@ -49,10 +74,12 @@ void PopularScience::printShortDescription() {
 
 std::ostream& operator<<(std::ostream& output, const PopularScience& bestseller) {
     output << bestseller.name << endl;
-    output << "\t\"" << bestseller.title <<"\" by " << bestseller.author << " published by " << bestseller.publisher_name << endl;
-    output << "\t Field of study: " << bestseller.field_of_study << endl;
     return  output;
 }
 void PopularScience::update() {
     Book::update();
+    Object_interface::updateStr("Field of study", this->field_of_study);
+    for (int i = 1; i <= this->sources.size(); i++) {
+        Object_interface::updateStr("Source nr. " + i, this->sources[i-1]);
+    }
 }
