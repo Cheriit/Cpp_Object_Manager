@@ -13,7 +13,7 @@ string Magazine::getTopic() { return this->topic; }
 int Magazine::getPages() { return this->pages; }
 float Magazine::getPrice() { return this->price; }
 int Magazine::getCirculation() { return this->circulation; }
-string Magazine::getManagzineNumber() { return this->magazine_number; }
+string Magazine::getMagazineNumber(){ return this->magazine_number; }
 string Magazine::getTitle() { return this->title; }
 
 void Magazine::setTopic(string topic) { this->topic = topic; }

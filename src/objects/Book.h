@@ -24,7 +24,7 @@ protected:
     string author;
 public:
     Book();
-    Book(ifstream&);
+    explicit Book(ifstream&);
     string getTitle();
     string getISBN();
     string getAuthor();
@@ -34,8 +34,8 @@ public:
     string getGenre();
     CoverType getCover();
     float getPrice();
-    void putDetails(ofstream&);
-    void printDetails();
+    void putDetails(ofstream&) override;
+    void printDetails() override;
     void setTitle(string);
     void setISBN(string);
     void setAuthor(string);
@@ -45,7 +45,7 @@ public:
     void setGenre(string);
     void setCover(CoverType);
     void setPrice(float);
-    void update();
+    void update() override;
 };
 
 

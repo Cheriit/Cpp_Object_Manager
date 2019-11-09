@@ -6,6 +6,9 @@
 #include <fstream>
 #include "PopularScience.h"
 
+PopularScience::PopularScience(): Book() {}
+PopularScience::PopularScience(ifstream& InputFile): Book(InputFile) {}
+
 vector<string> PopularScience::getSources() { return this->sources; }
 string PopularScience::getFieldOfStudy() { return this->field_of_study; }
 
@@ -44,10 +47,10 @@ void PopularScience::printShortDescription() {
     cout << "\t Field of study: " << this->field_of_study << endl;
 }
 
-std::ostream& PopularScience::operator<<(std::ostream& output, const PopularScience& bestseller) {
-    output << this->getName() << endl;
-    output << "\t\"" << this->getTitle() <<"\" by " << this->getAuthor() << " published by " << this->getPublisherName() << endl;
-    output << "\t Field of study: " << this->field_of_study << endl;
+std::ostream& operator<<(std::ostream& output, const PopularScience& bestseller) {
+    output << bestseller.name << endl;
+    output << "\t\"" << bestseller.title <<"\" by " << bestseller.author << " published by " << bestseller.publisher_name << endl;
+    output << "\t Field of study: " << bestseller.field_of_study << endl;
     return  output;
 }
 void PopularScience::update() {

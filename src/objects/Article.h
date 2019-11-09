@@ -20,7 +20,7 @@ protected:
     string subject;
 public:
     Article();
-    Article(ifstream&);
+    explicit Article(ifstream&);
 
     string getAuthorFirstName();
     string getAuthorLastName();
@@ -28,15 +28,15 @@ public:
     string getSubject();
     string getContent();
     vector<string> getPictures();
-    void putDetails(ofstream&);
-    void printDetails();
+    void putDetails(ofstream&) override;
+    void printDetails() override;
     void printShortDescription();
     void printPictures();
     void setAuthorFullName(string, string);
     void setSubject(string);
     void setContent(string);
     void addPicture(string);
-    void update();
+    void update() override;
     friend std::ostream& operator<<(std::ostream& output, const Article& article);
 
 };

@@ -12,7 +12,7 @@ Daily::Daily(ifstream& InputFile): Magazine(InputFile) {}
 string Daily::getPrintingHour() { return this->printing_hour; }
 string Daily::getPublishmentArea() { return this->publishment_area; }
 
-void Daily::setPringingHour(string printing_hour) { this->printing_hour = printing_hour; }
+void Daily::setPrintingHour(const string&) { this->printing_hour = printing_hour; }
 void Daily::setPublishmentArea(string publishment_area) { this->publishment_area = publishment_area; }
 
 void Daily::putDetails(ofstream& OutputFile) {

@@ -6,8 +6,8 @@
 #include <fstream>
 #include "Publisher.h"
 
-Publisher::Publisher() {}
-Publisher::Publisher(ifstream &) {}
+Publisher::Publisher() : Object_interface() {}
+Publisher::Publisher(ifstream & InputFile) : Object_interface(InputFile) {}
 
 int Publisher::getFoundingYear() { return this->founding_year; }
 string Publisher::getPublisherName() { return this->publisher_name; }

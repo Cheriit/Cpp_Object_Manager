@@ -7,7 +7,7 @@
 
 #include <vector>
 #include <string>
-#include "../objects/Object_interface.h"
+#include "../objects/Publisher.h"
 #include <map>
 
 using namespace std;
@@ -15,15 +15,22 @@ class Vertex {
 private:
     string class_name;
     vector<Vertex*> childrens;
-    bool is_leaf = false;
+    bool is_leaf;
 public:
+    explicit Vertex(string, bool = false);
     string getClassName();
     vector<Vertex*> getChildrens();
+    bool isLeaf();
     void setName(string);
-    void addChildren(Vertex);
+    virtual void addChildren(Vertex *);
     Vertex* findVertex(string);
+
+    virtual Publisher* findObject(string);
     void printStructure(int);
-    map<string, Object_interface> getElements();
+
+    virtual void printObjects();
+
+    static Vertex* generateStructureTree();
 };
 
 

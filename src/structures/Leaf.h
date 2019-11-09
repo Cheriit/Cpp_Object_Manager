@@ -7,20 +7,21 @@
 
 
 #include "Vertex.h"
-#include "../objects/Object_interface.h"
+#include "../objects/Publisher.h"
 #include <map>
 
 class Leaf: public Vertex{
 private:
-    map<string, Object_interface> elements;
+    map<string, Publisher*> elements;
     bool isLeaf = true;
-    int nextID = 0;
 public:
-    map<string, Object_interface> getElements();
-    void addElement(Object_interface);
+    explicit Leaf(string);
+    map<string, Publisher*> getElements();
+    void addElement(Publisher*);
     void removeElement(string);
-    void printElements();
-    void addChildren(Vertex);   //To liść, komunikat
+    void printObjects() override ;
+    void addChildren(Vertex* ) override;
+    Publisher * findObject(string) override;
 };
 
 

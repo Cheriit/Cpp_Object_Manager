@@ -48,10 +48,10 @@ void Bestseller::printShortDescription() {
     cout << "\t sold in " << this->sold_copies << " copies." << endl;
 }
 
-std::ostream& Bestseller::operator<<(std::ostream& output, const Bestseller& bestseller) {
-    output << this->getName() << endl;
-    output << "\t\"" << this->getTitle() <<"\" by " << this->getAuthor() << " published by " << this->getPublisherName() << endl;
-    output << "\t sold in " << this->getSoldCopies() << " copies." << endl;
+std::ostream& operator<<(std::ostream& output, const Bestseller& bestseller) {
+    output << bestseller.name << endl;
+    output << "\t\"" << bestseller.title <<"\" by " << bestseller.author << " published by " << bestseller.publisher_name << endl;
+    output << "\t sold in " << bestseller.sold_copies << " copies." << endl;
     return  output;
 }
 void Bestseller::update() {

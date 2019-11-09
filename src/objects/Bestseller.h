@@ -18,19 +18,19 @@ protected:
     int sold_copies;
 public:
     Bestseller();
-    Bestseller(ifstream&);
+    explicit Bestseller(ifstream&);
     int getSoldCopies();
     float getScore();
     string getBestsellingPeriod();
     string getBestsellingWhere();
-    void putDetails(ofstream&);
-    void printDetails();
+    void putDetails(ofstream&) override;
+    void printDetails() override;
     void printShortDescription();
     void setSoldCopies(int);
     void setScore(float);
     void setBestsellingPeriod(string, string);
     void setBestsellingWhere(string);
-    void update();
+    void update() override;
     friend std::ostream& operator<<(std::ostream&, const Bestseller& bestseller);
 };
 

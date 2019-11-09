@@ -19,22 +19,22 @@ protected:
     string title;
 public:
     Magazine();
-    Magazine(ifstream&);
-    string getManagzineNumber();
+    explicit Magazine(ifstream&);
+    string getMagazineNumber();
     string getTopic();
     int getPages();
     string getTitle();
     float getPrice();
     int getCirculation();
-    void putDetails(ofstream&);
-    void printDetails();
+    void putDetails(ofstream&) override;
+    void printDetails() override;
     void setMagazineNumber(string);
     void setTopic(string);
     void setPages(int);
     void setTitle(string);
     void setPrice(float);
     void setCirculation(float);
-    void update();
+    void update() override;
 };
 
 

@@ -18,18 +18,18 @@ protected:
     string publisher_name;
 public:
     Publisher();
-    Publisher(ifstream&);
+    explicit Publisher(ifstream &);
     int getFoundingYear();
     string getPublisherName();
     string getOriginCountry();
     string getCEO();
-    void putDetails(ofstream&);
-    void printDetails();
+    void putDetails(ofstream&) override;
+    void printDetails() override;
     void setFoundingYear(int);
     void setPublisherName(string);
     void setOriginCountry(string);
     void setCEO(string);
-    void update();
+    void update() override;
 };
 
 

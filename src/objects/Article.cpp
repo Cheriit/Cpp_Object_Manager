@@ -25,8 +25,8 @@ void Article::setContent(string content) { this->content = content; }
 void Article::addPicture(string picture) { this->pictures.push_back(picture); }
 
 void Article::printPictures() {
-    for (int i = 0; i < this->pictures.size(); ++i) {
-        cout << "\t\t" << this->pictures[i] << endl;
+    for (const auto & picture : this->pictures) {
+        cout << "\t\t" << picture << endl;
     }
 }
 void Article::putDetails(ofstream& OutputFile){
@@ -61,11 +61,11 @@ void Article::printShortDescription() {
     cout << "\t Published at: " << this->publishment_area << " in " << this->title << " " << this->magazine_number << endl;
 }
 
-std::ostream& Article::operator<<(std::ostream& output, const Article& article) {
-    output << this->getName() << endl;
-    output << "\t\"" << this->subject <<"\" by " << this->getAuthorName() << " published by " << this->publisher_name << endl;
-    output << "\t Published at: " << this->publishment_area << " in " << this->title << " " << this->magazine_number << endl;
-    return  output;
+std::ostream& operator<<(std::ostream &output, const Article& article) {
+    output << article.name << endl;
+    output << "\t\"" << article.subject <<"\" by " << article.author_first_name << " " << article.author_last_name << " published by " << article.publisher_name << endl;
+    output << "\t Published at: " << article.publishment_area << " in " << article.title << " " << article.magazine_number << endl;
+    return output;
 }
 void Article::update() {
     Weekly::update();

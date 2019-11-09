@@ -15,14 +15,14 @@ protected:
     string publishment_area;
 public:
     Daily();
-    Daily(ifstream&);
+    explicit Daily(ifstream&);
     string getPrintingHour();
     string getPublishmentArea();
-    void putDetails(ofstream&);
-    void printDetails();
-    void setPringingHour(string);
+    void putDetails(ofstream&) override;
+    void printDetails() override;
+    void setPrintingHour(const string&);
     void setPublishmentArea(string);
-    void update();
+    void update() override;
 };
 
 

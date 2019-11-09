@@ -11,7 +11,10 @@
 class Weekly: public MagazineType<WeekDay> {
 public:
     Weekly();
-    Weekly(ifstream&);
+    explicit Weekly(ifstream&);
+    void putDetails(ofstream&) override;
+    void printDetails() override;
+    void update() override;
 };
 
 

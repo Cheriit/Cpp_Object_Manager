@@ -10,8 +10,11 @@
 class Monthly: public MagazineType<int> {
 public:
     Monthly();
-    Monthly(ifstream&);
+    explicit Monthly(ifstream&);
     void printShortDescription();
+    void putDetails(ofstream&) override;
+    void printDetails() override;
+    void update() override;
     friend std::ostream& operator<<(std::ostream& output, const Monthly& monthly);
 
 };
