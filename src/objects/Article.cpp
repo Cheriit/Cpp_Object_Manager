@@ -6,38 +6,38 @@
 #include <fstream>
 #include <limits>
 #include "Article.h"
+#include "../../helpers/Updater.h"
+#include "../../helpers/Reader.h"
 
-Article::Article(): Weekly(), Daily() {
+Article::Article(): Magazine(), Weekly(), Daily() {
     cin.ignore(numeric_limits<streamsize>::max(),'\n');
     string tmp;
     int pictures;
     cout << "\t\tARTICLE" << endl;
 
-    cout << "Subject:" << endl;
-    getline(cin, this->subject);
-    cout << "Author's first name:" << endl;
-    getline(cin, this->author_first_name);
-    cout << "Author's last name:" << endl;
-    getline(cin, this->author_last_name);
-    cout << "Content:" << endl;
-    getline(cin, this->content);
+    Reader::readString("Subject", this->subject);
+    Reader::readString("Author's first name", this->author_first_name);
+    Reader::readString("Author's last name", this->author_last_name);
+    Reader::readString("Content", this->content);
 
     cout << "Number of pictures:" << endl;
     cin >> pictures;
     cout << "Your pictures: " << endl;
-    for (int i = 0; i < pictures; i++) {
-        getline(cin, tmp);
-        this->addPicture(tmp);
+    if(pictures>0)
+    {
+        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        for (int i = 0; i < pictures; i++) {
+            getline(cin, tmp);
+            this->addPicture(tmp);
+        }
     }
-
 }
-Article::Article(ifstream& InputFile): Weekly(InputFile), Daily(InputFile) {
-    int tmp;
+Article::Article(ifstream& InputFile): Magazine(InputFile), Weekly(InputFile), Daily(InputFile){
+    int tmp=0;
     string tmp_picture;
     getline(InputFile, this->author_first_name);
     getline(InputFile, this->author_last_name);
-    cin >> tmp;
-    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+    tmp = Reader::readNum(InputFile);
     for (int i = 0; i < tmp; i++) {
         getline(InputFile, tmp_picture);
         this->pictures.push_back(tmp_picture);
@@ -69,8 +69,8 @@ void Article::printPictures() {
     }
 }
 void Article::putDetails(ofstream& OutputFile){
-    Weekly::putDetails(OutputFile);
     Daily::putDetails(OutputFile);
+    Weekly::putDetails(OutputFile);
     OutputFile << this->author_first_name << endl;
     OutputFile << this->author_last_name << endl;
     OutputFile << this->pictures.size() << endl;
@@ -81,8 +81,8 @@ void Article::putDetails(ofstream& OutputFile){
     OutputFile << this->subject << endl;
 }
 void Article::printDetails() {
-    Weekly::printDetails();
     Daily::printDetails();
+    Weekly::printDetails();
     cout << "ARTICLE: " << endl;
     cout << "\tAuthor: " << this->getAuthorName() << endl;
     cout << "\tSubject: " << this->subject << endl;
@@ -97,18 +97,18 @@ void Article::printShortDescription() {
     cout << "\t Published at: " << this->publishment_area << " in " << this->title << " " << this->magazine_number << endl;
 }
 
-std::ostream& operator<<(std::ostream &output, const Article& article) {
-    output << article.name << endl;
-    return output;
-}
 void Article::update() {
-    Weekly::update();
     Daily::update();
-    Object_interface::updateStr("Subject", this->subject);
-    Object_interface::updateStr("Author's first name", this->author_first_name);
-    Object_interface::updateStr("Author's last name", this->author_last_name);
-    Object_interface::updateStr("Content", this->content);
+    Weekly::update();
+    Updater::updateStr("Subject", this->subject);
+    Updater::updateStr("Author's first name", this->author_first_name);
+    Updater::updateStr("Author's last name", this->author_last_name);
+    Updater::updateStr("Content", this->content);
     for (int i = 1; i <= this->pictures.size(); i++) {
-        Object_interface::updateStr("Picture nr. " + i, this->pictures[i-1]);
+        Updater::updateStr("Picture nr. " + std::to_string(i), this->pictures[i - 1]);
     }
+}
+
+Article::~Article() {
+    this->pictures.clear();
 }

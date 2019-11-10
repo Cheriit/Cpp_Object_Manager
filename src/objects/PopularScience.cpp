@@ -6,19 +6,20 @@
 #include <fstream>
 #include <limits>
 #include "PopularScience.h"
+#include "../../helpers/Updater.h"
+#include "../../helpers/Reader.h"
 
 PopularScience::PopularScience(): Book() {
-    cin.ignore(numeric_limits<streamsize>::max(),'\n');
     string tmp;
     int sources;
     cout << "\t\tPOPULARSCIENCE" << endl;
 
-    cout << "Field of study:" << endl;
-    getline(cin, this->title);
+    Reader::readString("Field of study", this->field_of_study);
 
     cout << "Number of sources:" << endl;
     cin >> sources;
     cout << "Your sources: " << endl;
+    cin.ignore(numeric_limits<streamsize>::max(),'\n');
     for (int i = 0; i < sources; i++) {
         getline(cin, tmp);
         this->addSource(tmp);
@@ -72,14 +73,14 @@ void PopularScience::printShortDescription() {
     cout << "\t Field of study: " << this->field_of_study << endl;
 }
 
-std::ostream& operator<<(std::ostream& output, const PopularScience& bestseller) {
-    output << bestseller.name << endl;
-    return  output;
-}
 void PopularScience::update() {
     Book::update();
-    Object_interface::updateStr("Field of study", this->field_of_study);
+    Updater::updateStr("Field of study", this->field_of_study);
     for (int i = 1; i <= this->sources.size(); i++) {
-        Object_interface::updateStr("Source nr. " + i, this->sources[i-1]);
+        Updater::updateStr("Source nr. " + std::to_string(i), this->sources[i - 1]);
     }
+}
+
+PopularScience::~PopularScience() {
+    sources.clear();
 }

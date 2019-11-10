@@ -6,34 +6,25 @@
 #include <fstream>
 #include <limits>
 #include "Bestseller.h"
+#include "../../helpers/Reader.h"
+#include "../../helpers/Updater.h"
 
 
 Bestseller::Bestseller(): Book() {
-    cin.ignore(numeric_limits<streamsize>::max(),'\n');
-    string tmp;
     cout << "\t\tBESTSELLER" << endl;
 
-    cout << "Bestselling from:" << endl;
-    getline(cin, this->bestselling_from);
-
-    cout << "Bestselling to:" << endl;
-    getline(cin, this->bestselling_to);
-
-    cout << "Bestselling where:" << endl;
-    getline(cin, this->bestselling_where);
-
-    cout << "Score:" << endl;
-    cin >> this->score;
-
-    cout << "Sold copies:" << endl;
-    cin >> this->sold_copies;
+    Reader::readString("Bestselling from", this->bestselling_from);
+    Reader::readString("Bestselling to", this->bestselling_to);
+    Reader::readString("Bestselling where", this->bestselling_where);
+    Reader::readNum<float>("Score", this->score);
+    Reader::readNum<int>("Sold copies", this->sold_copies);
 }
 Bestseller::Bestseller(ifstream& InputFile): Book(InputFile) {
-    this->score = Object_interface::readNum(InputFile);
+    this->score = Reader::readNum(InputFile);
     getline(InputFile, this->bestselling_from);
     getline(InputFile, this->bestselling_to);
     getline(InputFile, this->bestselling_where);
-    this->sold_copies = Object_interface::readNum(InputFile);
+    this->sold_copies = Reader::readNum(InputFile);
 }
 
 float Bestseller::getScore() { return this->score; }
@@ -73,16 +64,12 @@ void Bestseller::printShortDescription() {
     cout << "\t sold in " << this->sold_copies << " copies." << endl;
 }
 
-std::ostream& operator<<(std::ostream& output, const Bestseller& bestseller) {
-    output << bestseller.name;
-    return  output;
-}
 void Bestseller::update() {
     Book::update();
     cout << "\t\tBESTSELLER" << endl;
-    Object_interface::updateNum<float>("Score", this->score);
-    Object_interface::updateStr("Bestselling from", this->bestselling_from);
-    Object_interface::updateStr("Bestselling to", this->bestselling_to);
-    Object_interface::updateStr("Bestselling where", this->bestselling_where);
-    Object_interface::updateNum<int>("Sold copies", this->sold_copies);
+    Updater::updateNum<float>("Score", this->score);
+    Updater::updateStr("Bestselling from", this->bestselling_from);
+    Updater::updateStr("Bestselling to", this->bestselling_to);
+    Updater::updateStr("Bestselling where", this->bestselling_where);
+    Updater::updateNum<int>("Sold copies", this->sold_copies);
 }

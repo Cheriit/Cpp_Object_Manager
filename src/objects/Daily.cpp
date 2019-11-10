@@ -5,16 +5,18 @@
 #include <iostream>
 #include <fstream>
 #include "Daily.h"
+#include "../../helpers/Updater.h"
+#include "../../helpers/Reader.h"
 
-Daily::Daily(): Magazine() {
+Daily::Daily() {
     cout << "\t\tDAILY" << endl;
-    cout << "Printing hour:" << endl;
-    getline(cin, this->printing_hour);
-    cout << "Publishment area:" << endl;
-    getline(cin, this->publishment_area);
-
+    Reader::readString("Printing hour", this->printing_hour);
+    Reader::readString("Publishment area", this->publishment_area);
 }
-Daily::Daily(ifstream& InputFile): Magazine(InputFile) {}
+Daily::Daily(ifstream& InputFile) {
+    getline(InputFile, this->printing_hour);
+    getline(InputFile, this->publishment_area);
+}
 
 string Daily::getPrintingHour() { return this->printing_hour; }
 string Daily::getPublishmentArea() { return this->publishment_area; }
@@ -38,7 +40,7 @@ void Daily::printDetails() {
 void Daily::update() {
     Magazine::update();
     cout << "\t\tDAILY" << endl;
-    Object_interface::updateStr("Printing hour", this->printing_hour);
-    Object_interface::updateStr("Publishment area", this->publishment_area);
+    Updater::updateStr("Printing hour", this->printing_hour);
+    Updater::updateStr("Publishment area", this->publishment_area);
 
 }

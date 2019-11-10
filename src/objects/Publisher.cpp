@@ -6,24 +6,20 @@
 #include <fstream>
 #include <limits>
 #include "Publisher.h"
+#include "../../helpers/Reader.h"
+#include "../../helpers/Updater.h"
 
-Publisher::Publisher() : Object_interface() {
-    cin.ignore(numeric_limits<streamsize>::max(),'\n');
-
+Publisher::Publisher() {
     cout << "\t\tPUBLISHER" << endl;
-    cout << "Publisher's name:" << endl;
-    getline(cin, this->publisher_name);
-    cout << "Origin country:" << endl;
-    getline(cin, this->origin_country);
-    cout << "CEO:" << endl;
-    getline(cin, this->CEO);
-    cout << "Founding year:" << endl;
-    cin >> this->founding_year;
+    Reader::readString("Publisher's name", this->publisher_name);
+    Reader::readString("Origin country", this->origin_country);
+    Reader::readString("CEO", this->CEO);
+    Reader::readNum<int>("Founding year", this->founding_year);
 }
-Publisher::Publisher(ifstream & InputFile) : Object_interface(InputFile) {
+Publisher::Publisher(ifstream & InputFile) {
     getline(InputFile, this->publisher_name);
     getline(InputFile, this->origin_country);
-    this->founding_year = Object_interface::readNum(InputFile);
+    this->founding_year = Reader::readNum(InputFile);
     getline(InputFile, this->CEO);
 
 }
@@ -56,9 +52,9 @@ void Publisher::printDetails() {
 
 void Publisher::update() {
     cout << "\t\tPUBLISHER" << endl;
-    Object_interface::updateStr("Publisher's name", this->publisher_name);
-    Object_interface::updateStr("Origin country", this->origin_country);
-    Object_interface::updateStr("CEO", this->CEO);
-    Object_interface::updateNum<int>("Founding year", this->founding_year);
+    Updater::updateStr("Publisher's name", this->publisher_name);
+    Updater::updateStr("Origin country", this->origin_country);
+    Updater::updateStr("CEO", this->CEO);
+    Updater::updateNum<int>("Founding year", this->founding_year);
 }
 

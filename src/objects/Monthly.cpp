@@ -6,25 +6,22 @@
 #include <fstream>
 #include <limits>
 #include "Monthly.h"
+#include "../../helpers/Reader.h"
+#include "../../helpers/Updater.h"
 
 Monthly::Monthly(): Magazine() {
-    cin.ignore(numeric_limits<streamsize>::max(),'\n');
     string tmp;
-    int tmp2;
-
     cout << "\t\tMONTHLY" << endl;
     cout << "Barcode:" << endl;
     getline(cin, tmp);
     this->setBarCode(tmp);
-    cout << "Publish day:" << endl;
-    cin >> tmp2;
-    this->setPublishDay(tmp2);
+    Reader::readNum<int>("Publish day", this->publish_day);
 }
 Monthly::Monthly(ifstream& InputFile): Magazine(InputFile) {
     string tmp;
     getline(InputFile, tmp);
     this->setBarCode(tmp);
-    this->publish_day = Object_interface::readNum(InputFile);
+    this->publish_day = Reader::readNum(InputFile);
 }
 
 void Monthly::putDetails(ofstream& OutputFile) {
@@ -46,18 +43,14 @@ void Monthly::printShortDescription() {
     cout << "\t Published at " << this->getPublishDay()  << endl;
 }
 
-std::ostream &operator<<(std::ostream &output, const Monthly& monthly) {
-    output << monthly.name << endl;
-    return  output;
-}
-
 void Monthly::update() {
     Magazine::update();
     std::string tmp;
     std::cout << "Barcode:(" << this->getBarCode() << ")" << std::endl;
     getline(std::cin, tmp);
     if(!tmp.empty()) this->setBarCode(tmp);
-    Object_interface::updateNum<int>("Publish day", this->publish_day);
+    Updater::updateNum<int>("Publish day", this->publish_day);
 
 }
+
 

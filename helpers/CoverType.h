@@ -4,6 +4,9 @@
 #ifndef PROJECT01_COVERTYPE_H
 #define PROJECT01_COVERTYPE_H
 
-enum CoverType{ Paperback, Hardback_Casewrap, Hardback_Dust_Jacket};
+/*
+ *  Cover's type definer
+ */
+enum CoverType{ None, Paperback, Hardback_Casewrap, Hardback_Dust_Jacket};
 
 #endif

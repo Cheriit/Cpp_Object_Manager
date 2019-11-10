@@ -3,8 +3,7 @@
 //
 #include <iostream>
 #include <fstream>
-#include "../helpers/string.cpp"
-
+#include <limits>
 #include "UI.h"
 #include "objects/Article.h"
 #include "objects/Bestseller.h"
@@ -34,6 +33,7 @@ void UI::mo_cmd() {
     {
         if( !Object_interface::nameExists(name) )
         {
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
             Publisher* obj;
             if ( this->currentVertex->getClassName() == "Article" )
                 obj = new Article();
@@ -73,7 +73,19 @@ void UI::mdo_cmd() {
     if ( this->currentVertex->isLeaf() )
     {
         Publisher* obj = this->currentVertex->findObject(name);
-        if ( obj != nullptr ) obj->update();
+        if ( obj != nullptr )
+        {
+            std::string tmp;
+            std::cout << "Object's name:(" << obj->getName() << ")" << std::endl;
+            cin >> tmp;
+            if (obj->getName() != tmp)
+            {
+                if(!tmp.empty() && !Object_interface::nameExists(tmp)) obj->setName(tmp);
+                else cout << "Incorrect name" << endl;
+            }
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+            obj->update();
+        }
         else cout << "There's no object with name " << name << endl;
     }
     else
@@ -123,10 +135,11 @@ void UI::save_cmd() {
 void UI::read_cmd() {
     string file_name;
     cin>>file_name;
+
     ifstream InputFile;
     InputFile.open(file_name, fstream::in);
     if (!InputFile.is_open())
-        cout << "Unable to create file " << file_name;
+        cout << "Unable to open file " << file_name;
     else
     {
         int count=0;
@@ -151,6 +164,8 @@ void UI::read_cmd() {
                 obj = new Monthly(InputFile);
             else if ( class_name == "PopularScience" )
                 obj = new PopularScience(InputFile);
+            else
+                break;
             obj->setName(obj_name);
             Leaf* searchingLeaf = dynamic_cast<Leaf *>(this->rootVertex->findVertex(class_name));
             searchingLeaf->addElement(obj);
@@ -159,7 +174,6 @@ void UI::read_cmd() {
         InputFile.close();
         cout << "Succesfully imported " << count << " objects." << endl;
     }
-
 }
 
 void UI::tree_cmd() {
@@ -189,8 +203,6 @@ void UI::help_cmd() {
     cout << "\t Monthly        \t (leaf)" << endl;
     cout << "\t Article        \t (leaf)" << endl;
     cout << "Object's name must be a single word!" << endl;
-
-
 }
 
 void UI::run() {
@@ -200,6 +212,7 @@ void UI::run() {
 
     while(true)
     {
+        command = "";
         cout << endl << "(" << this->currentVertex->getClassName() << ") >>> ";
         cin>>command;
         if( command == "CD" || command == "cd")           this->cd_cmd();
@@ -214,9 +227,7 @@ void UI::run() {
         else if( command == "HELP" || command == "help" ) this->help_cmd();
         else if( command == "EXIT" || command == "exit" ) break;
         else cout << "Command \"" << command << "\" not found. Try again!" << endl << endl;
-        cin.ignore();
+        std::cin.clear();
+        std::cin.ignore(100, '\n');
     }
-
 }
-
-
