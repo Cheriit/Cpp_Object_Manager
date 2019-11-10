@@ -65,6 +65,12 @@ public:
      */
     virtual Publisher* findObject(string);
     /**
+     * Returns leaf containing object with given name
+     * @param string name
+     * @return Vertex*
+     */
+    Vertex* findElementVertex(string);
+    /**
      * Recursive print of a project's structure
      */
     void printStructure(int);

@@ -30,8 +30,7 @@ PopularScience::PopularScience(ifstream& InputFile): Book(InputFile) {
     int tmp;
     string tmp_source;
     getline(InputFile, this->field_of_study);
-    cin >> tmp;
-    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+    tmp = Reader::readNum(InputFile);
     for (int i = 0; i < tmp; i++) {
         getline(InputFile, tmp_source);
         this->sources.push_back(tmp_source);

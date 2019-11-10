@@ -75,16 +75,9 @@ void UI::mdo_cmd() {
         Publisher* obj = this->currentVertex->findObject(name);
         if ( obj != nullptr )
         {
-            std::string tmp;
-            std::cout << "Object's name:(" << obj->getName() << ")" << std::endl;
-            cin >> tmp;
-            if (obj->getName() != tmp)
-            {
-                if(!tmp.empty() && !Object_interface::nameExists(tmp)) obj->setName(tmp);
-                else cout << "Incorrect name" << endl;
-            }
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
             obj->update();
+            cout << "Successfully updated " << obj->getName() << endl;
         }
         else cout << "There's no object with name " << name << endl;
     }

@@ -41,6 +41,16 @@ Publisher *Vertex::findObject(string name) {
         return nullptr;
 }
 
+Vertex *Vertex::findElementVertex(string name) {
+    Vertex* vertex = nullptr;
+    for (auto & children : this->childrens)\
+            {
+        vertex = children->findElementVertex(name);
+        if (vertex != nullptr) return vertex;
+    }
+    return nullptr;
+}
+
 void Vertex::printObjects() {
     for (auto & children : this->childrens)\
         children->printObjects();

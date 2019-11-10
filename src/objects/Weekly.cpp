@@ -17,7 +17,7 @@ Weekly::Weekly() {
     cout << "Barcode:" << endl;
     getline(cin, tmp);
     this->setBarCode(tmp);
-    Reader::readNum<int>("Publish day (1 - Monday, ..., 7 - Sunday", tmp2);
+    Reader::readNum<int>("Publish day (1 - Monday, ..., 7 - Sunday)", tmp2);
     this->setPublishDay(tmp2);
 }
 Weekly::Weekly(ifstream& InputFile) {

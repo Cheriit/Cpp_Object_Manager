@@ -10,7 +10,6 @@
 #include "../../helpers/Reader.h"
 
 Article::Article(): Magazine(), Weekly(), Daily() {
-    cin.ignore(numeric_limits<streamsize>::max(),'\n');
     string tmp;
     int pictures;
     cout << "\t\tARTICLE" << endl;
